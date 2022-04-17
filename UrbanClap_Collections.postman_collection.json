@@ -1,0 +1,494 @@
+{
+	"info": {
+		"_postman_id": "3890a1b5-f2c9-4f09-8222-e62151c6cab7",
+		"name": "UrbanClap_Collections",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "ServiceCatalog",
+			"item": [
+				{
+					"name": "GetServices",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:53754/services",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "53754",
+							"path": [
+								"services"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddService",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"serviceName\": \"Wedding Planner\",\n\t\"cost\": 15000.00\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:53754/services",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "53754",
+							"path": [
+								"services"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateService",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"serviceId\": 4,\r\n        \"serviceName\": \"Wedding Planner\",\r\n        \"cost\": 300000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:53754/services",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "53754",
+							"path": [
+								"services"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "ServiceBooking",
+			"item": [
+				{
+					"name": "GetBookingByBookingId",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:53754/booking/bookingId/446254492",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "53754",
+							"path": [
+								"booking",
+								"bookingId",
+								"446254492"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetBookingsByCustomerId",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:53754/booking/customerId/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "53754",
+							"path": [
+								"booking",
+								"customerId",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddNewBooking",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"CustomerId\": 1,\n\t\"ServiceId\": 3,\n\t\"ServiceType\": \"Interior Design\",\n\t\"JobDescription\": \"Upgrade Kitchen and Dining Area\",\n\t\"DateTime\": \"2022-04-25\",\n\t\"MobileNumber\": \"9876543210\",\n\t\"Address\": \"Delhi\",\n\t\"PinCode\": \"101010\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:53754/booking",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "53754",
+							"path": [
+								"booking"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "GetCustomers",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"CustomerId\": 1,\n\t\"ServiceId\": 3,\n\t\"ServiceType\": \"Interior Design\",\n\t\"JobDescription\": \"Upgrade Kitchen and Dining Area\",\n\t\"DateTime\": \"2022-04-25\",\n\t\"MobileNumber\": \"9876543210\",\n\t\"Address\": \"Rohini\",\n\t\"PinCode\": \"122122\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:53754/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "53754",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCustomerById",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"CustomerId\": 1,\n\t\"ServiceId\": 3,\n\t\"ServiceType\": \"Interior Design\",\n\t\"JobDescription\": \"Upgrade Kitchen and Dining Area\",\n\t\"DateTime\": \"2022-04-25\",\n\t\"MobileNumber\": \"9876543210\",\n\t\"Address\": \"Rohini\",\n\t\"PinCode\": \"122122\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:53754/user/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "53754",
+							"path": [
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddNewCustomer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:57323/api/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "57323",
+							"path": [
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "ServiceProvider",
+			"item": [
+				{
+					"name": "GetAllServiceProviders",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:53754/serviceproviders",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "53754",
+							"path": [
+								"serviceproviders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddNewServiceProvider",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Provider New\",\n\t\"role\": \"Interior Designer\",\n\t\"mobileNumber\": \"8888999900\",\n\t\"address\": \"Delhi\",\n\t\"pincode\": \"303030\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:53754/serviceproviders",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "53754",
+							"path": [
+								"serviceproviders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetNewBookings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:53754/serviceprovider/new/bookings/1?",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "53754",
+							"path": [
+								"serviceprovider",
+								"new",
+								"bookings",
+								"1"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RespondToNewBooking",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"bookingId\": 1901730676,\r\n        \"customerId\": 1,\r\n        \"serviceProviderId\": 1,\r\n        \"serviceType\": \"Interior Design\",\r\n        \"jobDescription\": \"Upgrade Kitchen and Dining Area\",\r\n        \"dateTime\": \"2022-04-25T00:00:00\",\r\n        \"mobileNumber\": \"9876543210\",\r\n        \"address\": \"Delhi\",\r\n        \"pinCode\": \"101010\",\r\n        \"cost\": 5000,\r\n        \"bookingStatus\": 0\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:53754/serviceprovider/action/accept",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "53754",
+							"path": [
+								"serviceprovider",
+								"action",
+								"accept"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Administration",
+			"item": [
+				{
+					"name": "GetAllNewBookings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:53754/admin/new/bookings",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "53754",
+							"path": [
+								"admin",
+								"new",
+								"bookings"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AssignServiceProvider",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:53754/admin/assign/serviceprovider/1901730676",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "53754",
+							"path": [
+								"admin",
+								"assign",
+								"serviceprovider",
+								"1901730676"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Notifications",
+			"item": [
+				{
+					"name": "GetNotifications",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:53754/notifications/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "53754",
+							"path": [
+								"notifications",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
