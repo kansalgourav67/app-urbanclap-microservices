@@ -5,6 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
+using Ocelot.Provider.Eureka;
+using Ocelot.Provider.Polly;
 
 namespace UrbanClap.ApiGateway
 {
@@ -15,7 +17,9 @@ namespace UrbanClap.ApiGateway
         public void ConfigureServices(IServiceCollection services)
         {
             // ocelot config.
-            services.AddOcelot();
+            services.AddOcelot()
+                .AddEureka()
+                .AddPolly();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

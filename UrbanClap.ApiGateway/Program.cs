@@ -20,6 +20,7 @@ namespace UrbanClap.ApiGateway
             Host.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
+                    config.AddJsonFile("appsettings.json", true, true);
                     config.AddJsonFile("ocelot.json", true, true);
                 })
                 .ConfigureWebHostDefaults(webBuilder =>

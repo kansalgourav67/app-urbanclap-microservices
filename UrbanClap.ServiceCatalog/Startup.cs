@@ -4,6 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Steeltoe.Discovery.Client;
+using Steeltoe.Discovery.Eureka;
 using UrbanClap.ServiceCatalog.Repositories;
 
 namespace UrbanClap.ServiceCatalog
@@ -26,8 +28,10 @@ namespace UrbanClap.ServiceCatalog
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "UrbanClap.ServiceCatalog", Version = "v1" });
             });
 
-            // Add health monitoring.
+            services.AddDiscoveryClient(Configuration);
             services.AddHealthChecks();
+            services.AddSingleton<IHealthCheckHandler, ScopedEurekaHealthCheckHandler>();
+
             services.AddTransient<IServiceCatalogRepository, ServiceCatalogRepository>();
         }
 
@@ -50,6 +54,8 @@ namespace UrbanClap.ServiceCatalog
                 endpoints.MapHealthChecks("/hc");
                 endpoints.MapControllers();
             });
+
+            app.UseDiscoveryClient();
         }
     }
 }

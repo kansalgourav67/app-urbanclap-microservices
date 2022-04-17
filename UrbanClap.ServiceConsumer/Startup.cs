@@ -6,6 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Steeltoe.Discovery.Client;
+using Steeltoe.Discovery.Eureka;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +35,10 @@ namespace UrbanClap.ServiceConsumer
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "UrbanClap.ServiceConsumer", Version = "v1" });
             });
 
+            services.AddDiscoveryClient(Configuration);
+            services.AddHealthChecks();
+            services.AddSingleton<IHealthCheckHandler, ScopedEurekaHealthCheckHandler>();
+
             services.AddTransient<IUserRepository, UserRepository>();
         }
 
@@ -54,6 +60,8 @@ namespace UrbanClap.ServiceConsumer
             {
                 endpoints.MapControllers();
             });
+
+            app.UseDiscoveryClient();
         }
     }
 }

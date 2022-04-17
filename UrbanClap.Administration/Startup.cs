@@ -5,6 +5,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Steeltoe.Discovery.Client;
+using Steeltoe.Discovery.Eureka;
 using System;
 using UrbanClap.AdministrationService.Consumers;
 using UrbanClap.AdministrationService.Repositories;
@@ -38,6 +40,10 @@ namespace UrbanClap.AdministrationService
             services.AddAutoMapper(typeof(Startup));
             services.AddScoped<ServiceBookingConfirmationConsumer>();
             services.AddScoped<ServiceBookingRequestConsumer>();
+
+            services.AddDiscoveryClient(Configuration);
+            services.AddHealthChecks();
+            services.AddSingleton<IHealthCheckHandler, ScopedEurekaHealthCheckHandler>();
 
             // MassTransit-RabbitMQ Configuration
             services.AddMassTransit(config =>
@@ -81,6 +87,8 @@ namespace UrbanClap.AdministrationService
             {
                 endpoints.MapControllers();
             });
+
+            app.UseDiscoveryClient();
         }
     }
 }
