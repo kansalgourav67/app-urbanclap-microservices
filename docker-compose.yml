@@ -1,6 +1,12 @@
 version: '3.4'
 
 services:
+  eurekaserver:
+    image: "steeltoeoss/eurekaserver"
+    ports:
+      - "8761:8761"
+    container_name: eurekaserver
+
   rabbitmq:
     image: rabbitmq:3-management
     ports:
@@ -9,8 +15,83 @@ services:
     container_name: rabbitmq
     hostname: my-rabbit
 
+  urbanclap.apigateway:
+    container_name: service-apigateway
+    image: ${DOCKER_REGISTRY-}urbanclap
+    build:
+      context: .
+      dockerfile: UrbanClap.ApiGateway/Dockerfile
+    ports:
+      - "8000:80"
+    depends_on:
+      - eurekaserver
+
   urbanclap.servicecatalog:
-    image: ${DOCKER_REGISTRY-}urbanclapservicecatalog
+    container_name: service-catalog
+    image: ${DOCKER_REGISTRY-}urbanclap
     build:
       context: .
       dockerfile: UrbanClap.ServiceCatalog/Dockerfile
+    ports:
+      - "8001:80"
+    depends_on:
+      - eurekaserver
+
+  urbanclap.bookingservice:
+    container_name: service-booking
+    image: ${DOCKER_REGISTRY-}urbanclap
+    build:
+      context: .
+      dockerfile: UrbanClap.Booking/Dockerfile
+    ports:
+      - "8002:80"
+    depends_on:
+      - eurekaserver
+      - rabbitmq
+
+  urbanclap.administrationservice:
+    container_name: service-administration
+    image: ${DOCKER_REGISTRY-}urbanclap
+    build:
+      context: .
+      dockerfile: UrbanClap.Administration/Dockerfile
+    ports:
+      - "8003:80"
+    depends_on:
+      - eurekaserver
+      - rabbitmq
+
+  urbanclap.serviceprovider:
+    container_name: service-provider
+    image: ${DOCKER_REGISTRY-}urbanclap
+    build:
+      context: .
+      dockerfile: UrbanClap.ServiceProvider/Dockerfile
+    ports:
+      - "8004:80"
+    depends_on:
+      - eurekaserver
+      - rabbitmq
+
+  urbanclap.customerservice:
+    container_name: service-customer
+    image: ${DOCKER_REGISTRY-}urbanclap
+    build:
+      context: .
+      dockerfile: UrbanClap.ServiceConsumer/Dockerfile
+    ports:
+      - "8005:80"
+    depends_on:
+      - eurekaserver
+
+  urbanclap.notificationservice:
+    container_name: service-notification
+    image: ${DOCKER_REGISTRY-}urbanclap
+    build:
+      context: .
+      dockerfile: UrbanClap.Notification/Dockerfile
+    ports:
+      - "8006:80"
+    depends_on:
+      - eurekaserver
+      - rabbitmq

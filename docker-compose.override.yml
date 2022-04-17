@@ -1,8 +1,52 @@
 version: '3.4'
 
 services:
+
+  urbanclap.administrationservice:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "80"
+
+
+  urbanclap.apigateway:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "80"
+
+
+  urbanclap.bookingservice:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "80"
+
+
+  urbanclap.customerservice:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "80"
+
+
+  urbanclap.notificationservice:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "80"
+
+
   urbanclap.servicecatalog:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
       - "80"
+
+
+  urbanclap.serviceprovider:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "80"
+
