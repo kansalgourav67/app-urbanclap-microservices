@@ -17,10 +17,10 @@ namespace UrbanClap.ServiceProvider.Services
 
         public async Task SendNotifications<T>(T message)
         {
-            // send booking-confirmation message onto the message bus.
+            // send notification to notification service.   
             await SendMessage(message, _notifyQueue);
 
-            // send notification to notification service.
+            // send booking-confirmation message onto the message bus.
             await SendMessage(message, _queue);
         }
 

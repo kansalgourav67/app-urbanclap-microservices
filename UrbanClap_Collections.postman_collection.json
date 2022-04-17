@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "3890a1b5-f2c9-4f09-8222-e62151c6cab7",
+		"_postman_id": "d7ba6ca5-4d5b-4482-809a-339ac8d08c13",
 		"name": "UrbanClap_Collections",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -26,12 +26,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:53754/services",
+							"raw": "http://localhost:8010/services",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "53754",
+							"port": "8010",
 							"path": [
 								"services"
 							]
@@ -54,12 +54,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:53754/services",
+							"raw": "http://localhost:8010/services",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "53754",
+							"port": "8010",
 							"path": [
 								"services"
 							]
@@ -82,12 +82,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:53754/services",
+							"raw": "http://localhost:8010/services",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "53754",
+							"port": "8010",
 							"path": [
 								"services"
 							]
@@ -119,16 +119,16 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:53754/booking/bookingId/446254492",
+							"raw": "http://localhost:8010/booking/bookingId/954115562",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "53754",
+							"port": "8010",
 							"path": [
 								"booking",
 								"bookingId",
-								"446254492"
+								"954115562"
 							]
 						}
 					},
@@ -152,12 +152,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:53754/booking/customerId/1",
+							"raw": "http://localhost:8010/booking/customerId/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "53754",
+							"port": "8010",
 							"path": [
 								"booking",
 								"customerId",
@@ -182,12 +182,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:53754/booking",
+							"raw": "http://localhost:8010/booking",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "53754",
+							"port": "8010",
 							"path": [
 								"booking"
 							]
@@ -219,12 +219,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:53754/users",
+							"raw": "http://localhost:8010/users",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "53754",
+							"port": "8010",
 							"path": [
 								"users"
 							]
@@ -250,44 +250,15 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:53754/user/1",
+							"raw": "http://localhost:8010/user/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "53754",
+							"port": "8010",
 							"path": [
 								"user",
 								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "AddNewCustomer",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:57323/api/user",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "57323",
-							"path": [
-								"api",
-								"user"
 							]
 						}
 					},
@@ -305,12 +276,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:53754/serviceproviders",
+							"raw": "http://localhost:8010/serviceproviders",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "53754",
+							"port": "8010",
 							"path": [
 								"serviceproviders"
 							]
@@ -333,12 +304,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:53754/serviceproviders",
+							"raw": "http://localhost:8010/serviceproviders",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "53754",
+							"port": "8010",
 							"path": [
 								"serviceproviders"
 							]
@@ -352,23 +323,17 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:53754/serviceprovider/new/bookings/1?",
+							"raw": "http://localhost:8010/serviceprovider/new/bookings/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "53754",
+							"port": "8010",
 							"path": [
 								"serviceprovider",
 								"new",
 								"bookings",
 								"1"
-							],
-							"query": [
-								{
-									"key": "",
-									"value": null
-								}
 							]
 						}
 					},
@@ -381,7 +346,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n        \"bookingId\": 1901730676,\r\n        \"customerId\": 1,\r\n        \"serviceProviderId\": 1,\r\n        \"serviceType\": \"Interior Design\",\r\n        \"jobDescription\": \"Upgrade Kitchen and Dining Area\",\r\n        \"dateTime\": \"2022-04-25T00:00:00\",\r\n        \"mobileNumber\": \"9876543210\",\r\n        \"address\": \"Delhi\",\r\n        \"pinCode\": \"101010\",\r\n        \"cost\": 5000,\r\n        \"bookingStatus\": 0\r\n    }",
+							"raw": " {\r\n        \"bookingId\": 954115562,\r\n        \"customerId\": 1,\r\n        \"serviceProviderId\": 1,\r\n        \"serviceType\": \"Interior Design\",\r\n        \"jobDescription\": \"Upgrade Kitchen and Dining Area\",\r\n        \"dateTime\": \"2022-04-25T00:00:00\",\r\n        \"mobileNumber\": \"9876543210\",\r\n        \"address\": \"Delhi\",\r\n        \"pinCode\": \"101010\",\r\n        \"cost\": 5000,\r\n        \"bookingStatus\": 0\r\n    }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -389,12 +354,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:53754/serviceprovider/action/accept",
+							"raw": "http://localhost:8010/serviceprovider/action/accept",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "53754",
+							"port": "8010",
 							"path": [
 								"serviceprovider",
 								"action",
@@ -416,12 +381,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:53754/admin/new/bookings",
+							"raw": "http://localhost:8010/admin/new/bookings",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "53754",
+							"port": "8010",
 							"path": [
 								"admin",
 								"new",
@@ -444,17 +409,17 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:53754/admin/assign/serviceprovider/1901730676",
+							"raw": "http://localhost:8010/admin/assign/serviceprovider/954115562",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "53754",
+							"port": "8010",
 							"path": [
 								"admin",
 								"assign",
 								"serviceprovider",
-								"1901730676"
+								"954115562"
 							]
 						}
 					},

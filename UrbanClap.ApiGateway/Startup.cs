@@ -17,9 +17,9 @@ namespace UrbanClap.ApiGateway
         public void ConfigureServices(IServiceCollection services)
         {
             // ocelot config.
-            services.AddOcelot()
-                .AddEureka()
-                .AddPolly();
+            services.AddOcelot();
+                //.AddEureka()
+                //.AddPolly();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

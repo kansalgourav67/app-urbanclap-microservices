@@ -13,25 +13,19 @@ services:
       - "5672:5672"
       - "15672:15672"
     container_name: rabbitmq
-    hostname: my-rabbit
+    hostname: rabbitmq
 
   urbanclap.apigateway:
     container_name: service-apigateway
-    image: ${DOCKER_REGISTRY-}urbanclap
-    build:
-      context: .
-      dockerfile: UrbanClap.ApiGateway/Dockerfile
+    image: 3153712/urbanclap-service-apigateway:latest
     ports:
-      - "8000:80"
+      - "8010:80"
     depends_on:
       - eurekaserver
 
   urbanclap.servicecatalog:
     container_name: service-catalog
-    image: ${DOCKER_REGISTRY-}urbanclap
-    build:
-      context: .
-      dockerfile: UrbanClap.ServiceCatalog/Dockerfile
+    image: 3153712/urbanclap-service-catalog:latest
     ports:
       - "8001:80"
     depends_on:
@@ -39,10 +33,7 @@ services:
 
   urbanclap.bookingservice:
     container_name: service-booking
-    image: ${DOCKER_REGISTRY-}urbanclap
-    build:
-      context: .
-      dockerfile: UrbanClap.Booking/Dockerfile
+    image: 3153712/urbanclap-service-booking:latest
     ports:
       - "8002:80"
     depends_on:
@@ -51,10 +42,7 @@ services:
 
   urbanclap.administrationservice:
     container_name: service-administration
-    image: ${DOCKER_REGISTRY-}urbanclap
-    build:
-      context: .
-      dockerfile: UrbanClap.Administration/Dockerfile
+    image: 3153712/urbanclap-admin:latest
     ports:
       - "8003:80"
     depends_on:
@@ -63,10 +51,7 @@ services:
 
   urbanclap.serviceprovider:
     container_name: service-provider
-    image: ${DOCKER_REGISTRY-}urbanclap
-    build:
-      context: .
-      dockerfile: UrbanClap.ServiceProvider/Dockerfile
+    image: 3153712/urbanclap-service-provider:latest
     ports:
       - "8004:80"
     depends_on:
@@ -75,10 +60,7 @@ services:
 
   urbanclap.customerservice:
     container_name: service-customer
-    image: ${DOCKER_REGISTRY-}urbanclap
-    build:
-      context: .
-      dockerfile: UrbanClap.ServiceConsumer/Dockerfile
+    image: 3153712/urbanclap-service-customer:latest
     ports:
       - "8005:80"
     depends_on:
@@ -86,10 +68,7 @@ services:
 
   urbanclap.notificationservice:
     container_name: service-notification
-    image: ${DOCKER_REGISTRY-}urbanclap
-    build:
-      context: .
-      dockerfile: UrbanClap.Notification/Dockerfile
+    image: 3153712/urbanclap-service-notification:latest
     ports:
       - "8006:80"
     depends_on:
