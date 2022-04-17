@@ -10,6 +10,7 @@ using UrbanClap.AdministrationService.Repositories;
 using AutoMapper;
 using UrbanClap.AdministrationService.Services;
 using UrbanClap.Common.EventBus.Messages;
+using IServiceProvider = UrbanClap.AdministrationService.Services.IServiceProvider;
 
 namespace UrbanClap.AdministrationService.Controllers
 {
@@ -19,14 +20,14 @@ namespace UrbanClap.AdministrationService.Controllers
     {
         private readonly IConfiguration _configuration;
         private readonly IBookingRepository _bookingRepository;
-        private readonly HttpClient _client;
+        private readonly IServiceProvider _serviceProvider;
         private readonly IMessageBus _messageBus;
         private readonly IMapper _mapper;
 
-        public AdminController(IMessageBus messageBus, IMapper mapper, IConfiguration config, IBookingRepository bookingRepository, HttpClient httpClient)
+        public AdminController(IMessageBus messageBus, IMapper mapper, IConfiguration config, IBookingRepository bookingRepository, IServiceProvider serviceProvider)
         {
             _bookingRepository = bookingRepository ?? throw new ArgumentNullException(nameof(bookingRepository));
-            _client = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
+            _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
             _configuration = config ?? throw new ArgumentNullException(nameof(config));
             _messageBus = messageBus ?? throw new ArgumentNullException(nameof(messageBus));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
@@ -58,7 +59,7 @@ namespace UrbanClap.AdministrationService.Controllers
                     var booking = _bookingRepository.GetBookingById(bookingId);
 
                     // Get all service providers that are available in specified pincode and provide requested service eg. Electrician.
-                    var serviceProviders = await GetAvailableServiceProviders(booking.ServiceType, booking.PinCode);
+                    var serviceProviders = await _serviceProvider.GetAvailableProviders(booking.ServiceType, booking.PinCode);
                     if (serviceProviders.Count >= 1)
                     {
                         // assign service to available service provider.
@@ -80,20 +81,6 @@ namespace UrbanClap.AdministrationService.Controllers
             catch(Exception ex)
             {
                 return BadRequest(ex.Message);
-            }
-        }
-
-        private async Task<List<int>> GetAvailableServiceProviders(string serviceType, string pincode)
-        {
-            var response = await _client.GetAsync($"{_configuration["ServiceProvider:HostAddress"]}/api/serviceprovider/{serviceType}/{pincode}");
-            if (response.StatusCode == HttpStatusCode.OK)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<List<int>>(content);
-            }
-            else
-            {
-                throw new Exception("Servcie Unavailable. Please try after sometime");
             }
         }
 

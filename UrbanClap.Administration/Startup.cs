@@ -5,12 +5,16 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Polly;
+using Polly.Extensions.Http;
 using Steeltoe.Discovery.Client;
 using Steeltoe.Discovery.Eureka;
 using System;
+using System.Net.Http;
 using UrbanClap.AdministrationService.Consumers;
 using UrbanClap.AdministrationService.Repositories;
 using UrbanClap.AdministrationService.Services;
+using IServiceProvider = UrbanClap.AdministrationService.Services.IServiceProvider;
 
 namespace UrbanClap.AdministrationService
 {
@@ -33,7 +37,10 @@ namespace UrbanClap.AdministrationService
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "UrbanClap.Administration", Version = "v1" });
             });
 
-            services.AddHttpClient();
+            services.AddHttpClient<IServiceProvider, Services.ServiceProvider>()
+                .AddPolicyHandler(GetRetryPolicy())
+                .AddPolicyHandler(GetCircuitBreakerPolicy());
+
             services.AddTransient<IMessageBus, MessageBus>();
             services.AddTransient<IBookingRepository, BookingRepository>();
             services.AddTransient<IMessageBus, MessageBus>();
@@ -93,6 +100,20 @@ namespace UrbanClap.AdministrationService
             });
 
             app.UseDiscoveryClient();
+        }
+
+        private static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
+        {
+            return HttpPolicyExtensions
+                .HandleTransientHttpError()
+                  .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+        }
+
+        private static IAsyncPolicy<HttpResponseMessage> GetCircuitBreakerPolicy()
+        {
+            return HttpPolicyExtensions
+                  .HandleTransientHttpError()
+                  .CircuitBreakerAsync(3, TimeSpan.FromSeconds(30));
         }
     }
 }

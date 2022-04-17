@@ -18,7 +18,7 @@ namespace UrbanClap.BookingService.Controllers
     [ApiController]
     public class BookingController : ControllerBase
     {
-        private readonly HttpClient _client;
+        private readonly ICatalogService _catalogService;
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
         private readonly IMessageBus _messageBus;
@@ -26,9 +26,9 @@ namespace UrbanClap.BookingService.Controllers
 
         private const string BookingOrderAcceptedMessage = "Thanks!. Your Booking Id is {0} ,Service provider will be assigned shortly";
 
-        public BookingController(HttpClient httpClient, IConfiguration configuration, IMapper mapper, IMessageBus messageBus, IBookingRepository bookingRepository)
+        public BookingController(ICatalogService catalogService, IConfiguration configuration, IMapper mapper, IMessageBus messageBus, IBookingRepository bookingRepository)
         {
-            _client = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
+            _catalogService = catalogService ?? throw new ArgumentNullException(nameof(catalogService));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _messageBus = messageBus ?? throw new ArgumentNullException(nameof(messageBus));
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
@@ -51,10 +51,8 @@ namespace UrbanClap.BookingService.Controllers
 
             try
             {
-                // Gets and set the latest price/cost of service from ServiceCatalog service.
-                var response = await _client.GetAsync($"{_configuration["ServiceCatalog:HostAddress"]}/api/servicecatalog/price/{booking.ServiceId}");
-                var serviceCost = await HandleHttpResponse<float>(response);
-                booking.Cost = serviceCost;
+                // Gets and set the latest price/cost of service like hair cut from ServiceCatalog api.
+                booking.Cost = await _catalogService.GetServiceCost(booking.ServiceId);
 
                 // set status of booking to received, and after providing service to customer will set it to completed.
                 booking.BookingStatus = BookingStatus.Received;
@@ -97,22 +95,6 @@ namespace UrbanClap.BookingService.Controllers
         public List<Models.Booking> GetBookingsByCustomer(int customerId)
         {
             return _bookingRepository.GetAllBookingsDoneByCustomers(customerId);
-        }
-
-        /// <summary>
-        /// Deserialized http response and returns generic type object.
-        /// </summary>
-        private static async Task<T> HandleHttpResponse<T>(HttpResponseMessage httpResponse)
-        {
-            if (httpResponse.StatusCode == HttpStatusCode.OK)
-            {
-                var content = await httpResponse.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<T>(content);
-            }
-            else
-            {
-                throw new Exception("Someting wrng happens. Please try again");
-            }
         }
     }
 }

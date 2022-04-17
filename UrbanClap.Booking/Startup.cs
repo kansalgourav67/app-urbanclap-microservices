@@ -13,6 +13,9 @@ using System;
 using UrbanClap.BookingService.Consumers;
 using UrbanClap.BookingService.Repository;
 using UrbanClap.BookingService.Services;
+using Polly;
+using System.Net.Http;
+using Polly.Extensions.Http;
 
 namespace UrbanClap.BookingService
 {
@@ -34,7 +37,11 @@ namespace UrbanClap.BookingService
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "UrbanClap.Booking", Version = "v1" });
             });
 
-            services.AddHttpClient();
+            // Add circuit breaker pattern and retry policy.
+            services.AddHttpClient<ICatalogService, CatalogService>()
+                .AddPolicyHandler(GetRetryPolicy())
+                .AddPolicyHandler(GetCircuitBreakerPolicy());
+
             services.AddAutoMapper(typeof(Startup));
             services.AddTransient<IMessageBus, MessageBus>();
             services.AddTransient<IBookingRepository, BookingRepository>();
@@ -86,6 +93,20 @@ namespace UrbanClap.BookingService
             });
 
             app.UseDiscoveryClient();
+        }
+
+        private static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
+        {
+            return HttpPolicyExtensions
+                .HandleTransientHttpError()
+                  .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+        }
+
+        private static IAsyncPolicy<HttpResponseMessage> GetCircuitBreakerPolicy()
+        {
+            return HttpPolicyExtensions
+                  .HandleTransientHttpError()
+                  .CircuitBreakerAsync(3, TimeSpan.FromSeconds(30));
         }
     }
 }
