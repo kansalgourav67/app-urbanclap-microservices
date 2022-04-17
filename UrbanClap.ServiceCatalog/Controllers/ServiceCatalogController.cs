@@ -1,16 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using UrbanClap.ServiceCatalog.Repositories;
 using UrbanClap.ServiceCatalog.Repository;
 
 namespace UrbanClap.ServiceCatalog.Controllers
 {
-    [Route("api/services")]
+    [Route("api/[controller]")]
     [ApiController]
     public class ServiceCatalogController : ControllerBase
     {
-        public ServiceCatalogController()
+        private readonly IServiceCatalogRepository _serviceCatalogRepository;
+
+        public ServiceCatalogController(IServiceCatalogRepository serviceCatalogRepository)
         {
+            _serviceCatalogRepository = serviceCatalogRepository ?? throw new ArgumentNullException(nameof(serviceCatalogRepository));
         }
 
         /// <summary>
@@ -19,7 +23,7 @@ namespace UrbanClap.ServiceCatalog.Controllers
         [HttpGet]
         public List<Service> Get()
         {
-            return ServiceCatalogRepository.GetAllService();
+            return _serviceCatalogRepository.GetAllService();
         }
 
         /// <summary>
@@ -35,7 +39,7 @@ namespace UrbanClap.ServiceCatalog.Controllers
 
             try
             {
-                return Ok(ServiceCatalogRepository.AddService(serviceCatalog));
+                return Ok(_serviceCatalogRepository.AddService(serviceCatalog));
             }
             catch (Exception ex)
             {
@@ -56,11 +60,34 @@ namespace UrbanClap.ServiceCatalog.Controllers
 
             try
             {
-                return Ok(ServiceCatalogRepository.UpdateService(serviceCatalog));
+                return Ok(_serviceCatalogRepository.UpdateService(serviceCatalog));
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Returns latest price of service by service id.
+        /// </summary>
+        /// <param name="serviceType"></param>
+        /// <returns></returns>
+        [HttpGet("price/{serviceId}")]
+        public IActionResult GetPriceByServiceType(int serviceId)
+        {
+            try
+            {
+                if(!_serviceCatalogRepository.ServiceExists(serviceId))
+                {
+                    return NotFound($"Service with id {serviceId} does not exists");
+                }
+
+                return Ok(_serviceCatalogRepository.GetPriceByServiceId(serviceId));
+            }
+            catch
+            {
+                return NotFound();
             }
         }
     }

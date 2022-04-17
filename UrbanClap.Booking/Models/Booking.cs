@@ -1,4 +1,5 @@
 ﻿using System;
+using UrbanClap.Common.EventBus.Messages;
 
 namespace UrbanClap.BookingService.Models
 {
@@ -10,6 +11,8 @@ namespace UrbanClap.BookingService.Models
         public int BookingId { get; set; }
 
         public int CustomerId { get; set; }
+
+        public int ServiceId { get; set; }
 
         public string ServiceType { get; set; }
 

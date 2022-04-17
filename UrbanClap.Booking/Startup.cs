@@ -1,3 +1,5 @@
+using GreenPipes;
+using GreenPipes.Util;
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -7,9 +9,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
 using UrbanClap.BookingService.Consumers;
+using UrbanClap.BookingService.Repository;
 using UrbanClap.BookingService.Services;
 
-namespace UrbanClap.Booking
+namespace UrbanClap.BookingService
 {
     public class Startup
     {
@@ -32,6 +35,8 @@ namespace UrbanClap.Booking
             services.AddHttpClient();
             services.AddAutoMapper(typeof(Startup));
             services.AddTransient<IMessageBus, MessageBus>();
+            services.AddTransient<IBookingRepository, BookingRepository>();
+            services.AddScoped<BookingConfirmationConsumer>();
 
             // MassTransit-RabbitMQ Configuration
             services.AddMassTransit(config =>
@@ -40,12 +45,9 @@ namespace UrbanClap.Booking
 
                 config.UsingRabbitMq((ctx, cfg) =>
                 {
-                    cfg.Host(new Uri($"rabbitmq://{Configuration["RabbitMQHostName"]}"), hostConfig => {
-                        hostConfig.Username("guest");
-                        hostConfig.Password("guest");
-                    });
+                    cfg.Host(new Uri("amqps://hehosepe:9HSOCfXSR7gUiuqrhtLnfLQhJGtTGpMI@lionfish.rmq.cloudamqp.com/hehosepe"));
 
-                    cfg.ReceiveEndpoint("booking", c =>
+                    cfg.ReceiveEndpoint("booking-confirmation", c =>
                     {
                         c.ConfigureConsumer<BookingConfirmationConsumer>(ctx);
                     });

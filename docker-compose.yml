@@ -1,0 +1,16 @@
+version: '3.4'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    container_name: rabbitmq
+    hostname: my-rabbit
+
+  urbanclap.servicecatalog:
+    image: ${DOCKER_REGISTRY-}urbanclapservicecatalog
+    build:
+      context: .
+      dockerfile: UrbanClap.ServiceCatalog/Dockerfile

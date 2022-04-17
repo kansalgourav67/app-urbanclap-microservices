@@ -1,17 +1,16 @@
+using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using UrbanClap.AdministrationService.Consumers;
+using UrbanClap.AdministrationService.Repositories;
+using UrbanClap.AdministrationService.Services;
 
-namespace UrbanClap.Administration
+namespace UrbanClap.AdministrationService
 {
     public class Startup
     {
@@ -31,6 +30,37 @@ namespace UrbanClap.Administration
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "UrbanClap.Administration", Version = "v1" });
             });
+
+            services.AddHttpClient();
+            services.AddTransient<IMessageBus, MessageBus>();
+            services.AddTransient<IBookingRepository, BookingRepository>();
+            services.AddTransient<IMessageBus, MessageBus>();
+            services.AddAutoMapper(typeof(Startup));
+            services.AddScoped<ServiceBookingConfirmationConsumer>();
+            services.AddScoped<ServiceBookingRequestConsumer>();
+
+            // MassTransit-RabbitMQ Configuration
+            services.AddMassTransit(config =>
+            {
+                config.AddConsumer<ServiceBookingRequestConsumer>();
+                config.AddConsumer<ServiceBookingConfirmationConsumer>();
+
+                config.UsingRabbitMq((ctx, cfg) =>
+                {
+                    cfg.Host(new Uri("amqps://hehosepe:9HSOCfXSR7gUiuqrhtLnfLQhJGtTGpMI@lionfish.rmq.cloudamqp.com/hehosepe"));
+
+                    cfg.ReceiveEndpoint("booking", c =>
+                    {
+                        c.ConfigureConsumer<ServiceBookingRequestConsumer>(ctx);
+                    });
+
+                    cfg.ReceiveEndpoint("booking-confirmation", c =>
+                    {
+                        c.ConfigureConsumer<ServiceBookingConfirmationConsumer>(ctx);
+                    });
+                });
+            });
+            services.AddMassTransitHostedService();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

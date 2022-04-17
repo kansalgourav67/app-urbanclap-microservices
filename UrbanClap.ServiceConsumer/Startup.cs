@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using UrbanClap.CustomerService.Repositories;
 
 namespace UrbanClap.ServiceConsumer
 {
@@ -31,6 +32,8 @@ namespace UrbanClap.ServiceConsumer
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "UrbanClap.ServiceConsumer", Version = "v1" });
             });
+
+            services.AddTransient<IUserRepository, UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

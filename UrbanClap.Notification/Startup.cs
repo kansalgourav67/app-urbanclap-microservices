@@ -1,15 +1,13 @@
+using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using UrbanClap.NotificationService.EventBusConsumers;
+using UrbanClap.NotificationService.Repositories;
 
 namespace UrbanClap.Notification
 {
@@ -25,12 +23,31 @@ namespace UrbanClap.Notification
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "UrbanClap.Notification", Version = "v1" });
             });
+
+            services.AddTransient<INotificationRepository, NotificationRepository>();
+            services.AddScoped<BookingConfirmationNotificationConsumer>();
+
+            // MassTransit-RabbitMQ Configuration
+            services.AddMassTransit(config =>
+            {
+                config.AddConsumer<BookingConfirmationNotificationConsumer>();
+
+                config.UsingRabbitMq((ctx, cfg) =>
+                {
+                    cfg.Host(new Uri("amqps://hehosepe:9HSOCfXSR7gUiuqrhtLnfLQhJGtTGpMI@lionfish.rmq.cloudamqp.com/hehosepe"));
+
+                    cfg.ReceiveEndpoint("notification", c =>
+                    {
+                        c.ConfigureConsumer<BookingConfirmationNotificationConsumer>(ctx);
+                    });
+                });
+            });
+            services.AddMassTransitHostedService();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

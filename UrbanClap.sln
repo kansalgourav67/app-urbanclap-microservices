@@ -3,23 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31005.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrbanClap.ServiceProvider", "UrbanClap.ServiceProvider\UrbanClap.ServiceProvider.csproj", "{D0523A21-5565-4723-AD5B-F63625619063}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanClap.ServiceProvider", "UrbanClap.ServiceProvider\UrbanClap.ServiceProvider.csproj", "{D0523A21-5565-4723-AD5B-F63625619063}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrbanClap.ServiceCatalog", "UrbanClap.ServiceCatalog\UrbanClap.ServiceCatalog.csproj", "{2346CD4B-59C6-40DA-8363-404A310D5407}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanClap.ServiceCatalog", "UrbanClap.ServiceCatalog\UrbanClap.ServiceCatalog.csproj", "{2346CD4B-59C6-40DA-8363-404A310D5407}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrbanClap.NotificationService", "UrbanClap.Notification\UrbanClap.NotificationService.csproj", "{148C5AB1-E7C8-483B-BF6E-6CCD23615A19}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanClap.AdministrationService", "UrbanClap.Administration\UrbanClap.AdministrationService.csproj", "{632E6BCE-C294-47A0-8F27-E482104FBCFF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrbanClap.AdministrationService", "UrbanClap.Administration\UrbanClap.AdministrationService.csproj", "{632E6BCE-C294-47A0-8F27-E482104FBCFF}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CommonLibraries", "CommonLibraries", "{8E1165CF-5FD0-4C85-9EBA-3175FD0BFF3C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateway", "ApiGateway", "{88F1C925-7AE0-4345-8F8D-E225621BA060}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanClap.BookingService", "UrbanClap.Booking\UrbanClap.BookingService.csproj", "{E44F14DB-E963-424E-9DFB-76A20F95894B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrbanClap.ApiGateway", "UrbanClap.ApiGateway\UrbanClap.ApiGateway.csproj", "{31740B3C-E9B3-4957-BC10-ED2A9D2BAF32}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanClap.CustomerService", "UrbanClap.ServiceConsumer\UrbanClap.CustomerService.csproj", "{F456C7FB-E073-4AA5-986E-DE25ED471ED2}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{8E1165CF-5FD0-4C85-9EBA-3175FD0BFF3C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanClap.NotificationService", "UrbanClap.Notification\UrbanClap.NotificationService.csproj", "{C3E76EE3-C351-4F65-97CD-A722F496809A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrbanClap.BookingService", "UrbanClap.Booking\UrbanClap.BookingService.csproj", "{E44F14DB-E963-424E-9DFB-76A20F95894B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventBus.Messages", "Common\EventBus.Messages\EventBus.Messages.csproj", "{6BF9E664-4B29-4F58-825E-82FA40130BA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrbanClap.CustomerService", "UrbanClap.ServiceConsumer\UrbanClap.CustomerService.csproj", "{F456C7FB-E073-4AA5-986E-DE25ED471ED2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanClap.ApiGateway", "UrbanClap.ApiGateway\UrbanClap.ApiGateway.csproj", "{F1B6B5F3-45CC-4E8F-8ED0-2C199E2D6F52}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{C4C485C9-C973-456A-82E8-44394672025A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,18 +37,10 @@ Global
 		{2346CD4B-59C6-40DA-8363-404A310D5407}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2346CD4B-59C6-40DA-8363-404A310D5407}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2346CD4B-59C6-40DA-8363-404A310D5407}.Release|Any CPU.Build.0 = Release|Any CPU
-		{148C5AB1-E7C8-483B-BF6E-6CCD23615A19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{148C5AB1-E7C8-483B-BF6E-6CCD23615A19}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{148C5AB1-E7C8-483B-BF6E-6CCD23615A19}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{148C5AB1-E7C8-483B-BF6E-6CCD23615A19}.Release|Any CPU.Build.0 = Release|Any CPU
 		{632E6BCE-C294-47A0-8F27-E482104FBCFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{632E6BCE-C294-47A0-8F27-E482104FBCFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{632E6BCE-C294-47A0-8F27-E482104FBCFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{632E6BCE-C294-47A0-8F27-E482104FBCFF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{31740B3C-E9B3-4957-BC10-ED2A9D2BAF32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{31740B3C-E9B3-4957-BC10-ED2A9D2BAF32}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{31740B3C-E9B3-4957-BC10-ED2A9D2BAF32}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{31740B3C-E9B3-4957-BC10-ED2A9D2BAF32}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E44F14DB-E963-424E-9DFB-76A20F95894B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E44F14DB-E963-424E-9DFB-76A20F95894B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E44F14DB-E963-424E-9DFB-76A20F95894B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -55,12 +49,28 @@ Global
 		{F456C7FB-E073-4AA5-986E-DE25ED471ED2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F456C7FB-E073-4AA5-986E-DE25ED471ED2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F456C7FB-E073-4AA5-986E-DE25ED471ED2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3E76EE3-C351-4F65-97CD-A722F496809A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3E76EE3-C351-4F65-97CD-A722F496809A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3E76EE3-C351-4F65-97CD-A722F496809A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3E76EE3-C351-4F65-97CD-A722F496809A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BF9E664-4B29-4F58-825E-82FA40130BA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BF9E664-4B29-4F58-825E-82FA40130BA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BF9E664-4B29-4F58-825E-82FA40130BA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BF9E664-4B29-4F58-825E-82FA40130BA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1B6B5F3-45CC-4E8F-8ED0-2C199E2D6F52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1B6B5F3-45CC-4E8F-8ED0-2C199E2D6F52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1B6B5F3-45CC-4E8F-8ED0-2C199E2D6F52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1B6B5F3-45CC-4E8F-8ED0-2C199E2D6F52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4C485C9-C973-456A-82E8-44394672025A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4C485C9-C973-456A-82E8-44394672025A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4C485C9-C973-456A-82E8-44394672025A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4C485C9-C973-456A-82E8-44394672025A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{31740B3C-E9B3-4957-BC10-ED2A9D2BAF32} = {88F1C925-7AE0-4345-8F8D-E225621BA060}
+		{6BF9E664-4B29-4F58-825E-82FA40130BA9} = {8E1165CF-5FD0-4C85-9EBA-3175FD0BFF3C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {37465DCB-2E74-496B-A458-1996DB1D16B5}

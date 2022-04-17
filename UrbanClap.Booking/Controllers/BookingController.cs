@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using UrbanClap.BookingService.Models;
 using UrbanClap.BookingService.Repository;
 using UrbanClap.BookingService.Services;
+using UrbanClap.Common.EventBus.Messages;
 
 namespace UrbanClap.BookingService.Controllers
 {
@@ -21,15 +22,17 @@ namespace UrbanClap.BookingService.Controllers
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
         private readonly IMessageBus _messageBus;
+        private readonly IBookingRepository _bookingRepository;
 
-        private const string BookingOrderAcceptedMessage = "Booking Id is {0} ,Service provider will be assigned shortly";
+        private const string BookingOrderAcceptedMessage = "Thanks!. Your Booking Id is {0} ,Service provider will be assigned shortly";
 
-        public BookingController(HttpClient httpClient, IConfiguration configuration, IMapper mapper, IMessageBus messageBus)
+        public BookingController(HttpClient httpClient, IConfiguration configuration, IMapper mapper, IMessageBus messageBus, IBookingRepository bookingRepository)
         {
             _client = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _messageBus = messageBus ?? throw new ArgumentNullException(nameof(messageBus));
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+            _bookingRepository = bookingRepository ?? throw new ArgumentNullException(nameof(bookingRepository));
         }
 
         /// <summary>
@@ -39,7 +42,7 @@ namespace UrbanClap.BookingService.Controllers
         /// Model contains booking related info.
         /// </param>
         [HttpPost]
-        public async Task<IActionResult> Post(Models.Booking booking)
+        public async Task<IActionResult> Post(Booking booking)
         {
             if (!ModelState.IsValid)
             {
@@ -49,7 +52,7 @@ namespace UrbanClap.BookingService.Controllers
             try
             {
                 // Gets and set the latest price/cost of service from ServiceCatalog service.
-                var response = await _client.GetAsync($"{_configuration["ServiceCatalog:HostAddress"]}/api/services/price/{booking.ServiceType}");
+                var response = await _client.GetAsync($"{_configuration["ServiceCatalog:HostAddress"]}/api/servicecatalog/price/{booking.ServiceId}");
                 var serviceCost = await HandleHttpResponse<float>(response);
                 booking.Cost = serviceCost;
 
@@ -57,15 +60,15 @@ namespace UrbanClap.BookingService.Controllers
                 booking.BookingStatus = BookingStatus.Received;
 
                 // Create new booking in the database.
-                var bookingId = BookingRepository.AddBooking(booking);
+                var bookingId = _bookingRepository.AddBooking(booking);
 
                 // send the booking notification to admin, to assign the service provider.
                 // send the BookingDetails message onto the message bus.
-                BookingDetailsMessage bookingDetailsMessage = _mapper.Map<BookingDetailsMessage>(booking);
+                var bookingDetailsMessage = _mapper.Map<ServiceBookingMessage>(booking);
                 bookingDetailsMessage.BookingId = bookingId;
                 await _messageBus.SendMessage(bookingDetailsMessage);
 
-                return Accepted(string.Format(BookingOrderAcceptedMessage, bookingId));
+                return Ok(string.Format(BookingOrderAcceptedMessage, bookingId));
             }
             catch(Exception ex)
             {
@@ -79,9 +82,9 @@ namespace UrbanClap.BookingService.Controllers
         [HttpGet("bookingId/{bookingId}")]
         public IActionResult GetBookingById(int bookingId)
         {
-            if (BookingRepository.IsBookingExists(bookingId))
+            if (_bookingRepository.IsBookingExists(bookingId))
             {
-                return Ok(BookingRepository.GetBookingById(bookingId));
+                return Ok(_bookingRepository.GetBookingById(bookingId));
             }
 
             return BadRequest("Invalid Booking Id");
@@ -93,7 +96,7 @@ namespace UrbanClap.BookingService.Controllers
         [HttpGet("customerId/{customerId}")]
         public List<Models.Booking> GetBookingsByCustomer(int customerId)
         {
-            return BookingRepository.GetAllBookingsDoneByCustomers(customerId);
+            return _bookingRepository.GetAllBookingsDoneByCustomers(customerId);
         }
 
         /// <summary>

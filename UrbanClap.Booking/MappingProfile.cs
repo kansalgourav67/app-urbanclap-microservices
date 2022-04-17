@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using UrbanClap.BookingService.Services;
+using UrbanClap.Common.EventBus.Messages;
 
 namespace UrbanClap.BookingService
 {
@@ -7,7 +8,7 @@ namespace UrbanClap.BookingService
     {
         public MappingProfile()
         {
-            CreateMap<Models.Booking, BookingDetailsMessage>().ReverseMap();
+            CreateMap<Models.Booking, ServiceBookingMessage>().ReverseMap();
         }
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using UrbanClap.ServiceCatalog.Repositories;
 
 namespace UrbanClap.ServiceCatalog
 {
@@ -27,6 +28,7 @@ namespace UrbanClap.ServiceCatalog
 
             // Add health monitoring.
             services.AddHealthChecks();
+            services.AddTransient<IServiceCatalogRepository, ServiceCatalogRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

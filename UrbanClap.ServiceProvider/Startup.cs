@@ -1,3 +1,4 @@
+using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +11,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using UrbanClap.ServiceProvider.Consumers;
+using UrbanClap.ServiceProvider.Repositories;
+using UrbanClap.ServiceProvider.Services;
 
 namespace UrbanClap.ServiceProvider
 {
@@ -31,6 +35,29 @@ namespace UrbanClap.ServiceProvider
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "UrbanClap.ServiceProvider", Version = "v1" });
             });
+
+            services.AddAutoMapper(typeof(Startup));
+            services.AddTransient<IServiceProviderRepository, ServiceProviderRepository>();
+            services.AddTransient<IBookingRepository, BookingRepository>();
+            services.AddTransient<IMessageBus, Services.MessageBus>();
+            services.AddScoped<AssignServiceBookingConsumer>();
+
+            // MassTransit-RabbitMQ Configuration
+            services.AddMassTransit(config =>
+            {
+                config.AddConsumer<AssignServiceBookingConsumer>();
+
+                config.UsingRabbitMq((ctx, cfg) =>
+                {
+                    cfg.Host(new Uri("amqps://hehosepe:9HSOCfXSR7gUiuqrhtLnfLQhJGtTGpMI@lionfish.rmq.cloudamqp.com/hehosepe"));
+
+                    cfg.ReceiveEndpoint("booking-assignment", c =>
+                    {
+                        c.ConfigureConsumer<AssignServiceBookingConsumer>(ctx);
+                    });
+                });
+            });
+            services.AddMassTransitHostedService();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
