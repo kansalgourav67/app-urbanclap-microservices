@@ -9,7 +9,7 @@ using UrbanClap.NotificationService.Repositories;
 namespace UrbanClap.Notification.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/notifications")]
     public class NotificationController : ControllerBase
     {
         private readonly INotificationRepository notificationRepository;

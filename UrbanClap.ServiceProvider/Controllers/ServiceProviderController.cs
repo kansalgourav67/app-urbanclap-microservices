@@ -115,7 +115,7 @@ namespace UrbanClap.ServiceProvider.Controllers
                     Cost = bookingDetails.Cost
                 };
 
-                await _messageBus.SendMessage(bookingConfirmationMessage);
+                await _messageBus.SendNotifications(bookingConfirmationMessage);
 
                 return Ok(String.Format("Thanks for confirmation. Your job is {0}", bookingDetails.JobDescription));
             }
