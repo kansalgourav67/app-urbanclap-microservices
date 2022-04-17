@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "d7ba6ca5-4d5b-4482-809a-339ac8d08c13",
+		"_postman_id": "223f5e6b-8e69-49ee-8984-f745fc295d19",
 		"name": "UrbanClap_Collections",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -437,12 +437,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:53754/notifications/1",
+							"raw": "http://localhost:8010/notifications/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "53754",
+							"port": "8010",
 							"path": [
 								"notifications",
 								"1"
