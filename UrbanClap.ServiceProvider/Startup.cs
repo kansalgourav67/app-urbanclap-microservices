@@ -55,7 +55,6 @@ namespace UrbanClap.ServiceProvider
 
                 config.UsingRabbitMq((ctx, cfg) =>
                 {
-                    //cfg.Host(new Uri("amqps://hehosepe:9HSOCfXSR7gUiuqrhtLnfLQhJGtTGpMI@lionfish.rmq.cloudamqp.com/hehosepe"));
                     cfg.Host(new Uri($"rabbitmq://{Configuration["RabbitMQHostName"]}"), hostConfig => {
                         hostConfig.Username("guest");
                         hostConfig.Password("guest");
